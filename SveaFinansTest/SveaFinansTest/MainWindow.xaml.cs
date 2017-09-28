@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SveaFinansTest.ViewModels;
 
 namespace SveaFinansTest
 {
@@ -23,6 +24,16 @@ namespace SveaFinansTest
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= MainWindow_Loaded;
+            var vm = new PersonsViewModel();
+            LayoutRoot.DataContext = vm;
+            await vm.Initialize();
+
         }
     }
 }
