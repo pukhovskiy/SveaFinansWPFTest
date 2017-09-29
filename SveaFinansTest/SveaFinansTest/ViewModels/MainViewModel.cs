@@ -11,45 +11,35 @@ using SveaFinansTest.Common;
 using SveaFinansTest.Enums;
 using SveaFinansTest.Helpers;
 using SveaFinansTest.Models;
+using SveaFinansTest.Services;
 
 namespace SveaFinansTest.ViewModels
 {
-    public class PersonsViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         private ObservableCollection<KeyValuePair<int, string>> _departments;
-        private Person _currentPerson;
+        private CollectionViewSource _validPersons;
+        private bool _isRunning;
+        private RelayCommand _longOperationCommand;
 
         internal ObservableCollection<Person> AllPersons { get; set; }
 
-        private CollectionViewSource myVar;
-
+       //as we need to filter collection and select active record in datagrid 
+       //
         public CollectionViewSource ValidPersons
         {
-            get { return myVar; }
+            get { return _validPersons; }
             set
             {
-                myVar = value;
+                _validPersons = value;
                 OnPropertyChanged();
             }
         }
-
-        public Person CurrentPerson
-        {
-            get { return _currentPerson; }
-            set
-            {
-                if (Equals(_currentPerson, value)) return;
-                _currentPerson = value;
-                OnPropertyChanged();
-
-            }
-        }
-
 
 
         //there are many ways of providing enum values to combobox etc.
-        //ObjectDataProvider, MarkupExtension, behaviors, via viewmodels 
-        //there are situations where you might need to add language, configuration, filters etc
+        //ObjectDataProvider, MarkupExtension, Behavior, View models 
+        //there are situations where you might need to add language, configuration, filter etc
         //thus providing values via vm will give us more flexibility 
 
         public ObservableCollection<KeyValuePair<int, string>> Departments
@@ -63,8 +53,6 @@ namespace SveaFinansTest.ViewModels
             }
         }
 
-        private bool _isRunning;
-
         public bool IsRunning
         {
             get { return _isRunning; }
@@ -76,7 +64,6 @@ namespace SveaFinansTest.ViewModels
             }
         }
 
-        private RelayCommand _longOperationCommand;
 
         public RelayCommand LongOpertionCommand
         {
@@ -105,7 +92,7 @@ namespace SveaFinansTest.ViewModels
 
 
 
-        public PersonsViewModel()
+        public MainViewModel()
         {
             Departments = new ObservableCollection<KeyValuePair<int, string>>
             {
@@ -120,7 +107,10 @@ namespace SveaFinansTest.ViewModels
             await GetPersons();
             await ApplyFilter();
         }
-
+        public async Task GetPersons()
+        {
+            AllPersons = await PersonsDataProvider.GetTestData();
+        }
         private Task ApplyFilter()
         {
             ValidPersons = new CollectionViewSource { Source = AllPersons };
@@ -134,30 +124,15 @@ namespace SveaFinansTest.ViewModels
             return person?.Id % 2 == 0;
         }
 
-        public async Task GetPersons()
-        {
-            AllPersons = await GetTestData();
-        }
-
         private async Task StartLongOperation()
         {
-            await Task.Delay(5000);
+            await Task.Delay(3000);
             SelectNextRow();
         }
 
         private void SelectNextRow()
         {
             ValidPersons.View.MoveCurrentToNext();
-        }
-
-        private static Task<ObservableCollection<Person>> GetTestData()
-        {
-            var listOfAllPersons = new ObservableCollection<Person>();
-            for (var i = 1; i <= 100; i++)
-            {
-                listOfAllPersons.Add(new Person { Id = i, Name = "Person " + i, DateOfBirth = DateTime.Today.AddDays(-i), Address = "Address " + i });
-            }
-            return Task.FromResult(listOfAllPersons);
         }
 
     }

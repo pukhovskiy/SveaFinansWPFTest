@@ -1,9 +1,11 @@
 ﻿<Window
-    x:Class="SveaFinansTest.MainWindow"
+    x:Class="SveaFinansTest.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:SveaFinansTest.Behaviors"
     xmlns:converters="clr-namespace:SveaFinansTest.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:SveaFinansTest"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:SveaFinansTest.Models"
@@ -20,7 +22,7 @@
     <Grid
         x:Name="LayoutRoot"
         Margin="15"
-        d:DataContext="{d:DesignInstance viewModels:PersonsViewModel}">
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -37,7 +39,7 @@
                 Height="24"
                 VerticalAlignment="Center"
                 DockPanel.Dock="Left"
-                Source="Resources/svea_finans.png" />
+                Source="../Resources/svea_finans.png" />
             <StackPanel Margin="5,0" VerticalAlignment="Center">
                 <TextBlock
                     Margin="0,1"
@@ -90,6 +92,9 @@
             IsReadOnly="True"
             ItemsSource="{Binding ValidPersons.View, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
             SelectionMode="Single">
+            <i:Interaction.Behaviors>
+                <behaviors:DataGridScrollToRowBehavior />
+            </i:Interaction.Behaviors>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Header="Id" />
 
