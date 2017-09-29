@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using SveaFinansTest.Models;
+using SveaFinansTest.DTO;
 
-namespace SveaFinansTest.Services
+namespace SveaFinansTest.DataProviders
 {
     public static class PersonsDataProvider
     {

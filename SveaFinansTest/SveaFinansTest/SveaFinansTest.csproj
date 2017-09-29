@@ -52,6 +52,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -77,8 +78,10 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\DataGridScrollToRowBehavior.cs" />
     <Compile Include="Converters\DepartmentIdToStringConverter.cs" />
+    <Compile Include="DTO\Person.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Services\PersonsDataProvider.cs" />
+    <Compile Include="DataProviders\PersonsDataProvider.cs" />
+    <Compile Include="Services\PersonsDataServices.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

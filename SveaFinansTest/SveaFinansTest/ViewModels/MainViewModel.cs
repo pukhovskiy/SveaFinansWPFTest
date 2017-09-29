@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using GalaSoft.MvvmLight.CommandWpf;
 using SveaFinansTest.Common;
+using SveaFinansTest.DataProviders;
 using SveaFinansTest.Enums;
 using SveaFinansTest.Helpers;
 using SveaFinansTest.Models;
@@ -109,7 +110,7 @@ namespace SveaFinansTest.ViewModels
         }
         public async Task GetPersons()
         {
-            AllPersons = await PersonsDataProvider.GetTestData();
+            AllPersons = await PersonsDataServices.GetAllPersons();
         }
         private Task ApplyFilter()
         {
