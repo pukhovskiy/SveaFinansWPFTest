@@ -25,8 +25,8 @@ namespace SveaFinansTest.ViewModels
 
         internal ObservableCollection<Person> AllPersons { get; set; }
 
-       //as we need to filter collection and select active record in datagrid 
-       //
+        //as we need to filter collection and select next record in datagrid from code
+        //we use CollectionViewSource
         public CollectionViewSource ValidPersons
         {
             get { return _validPersons; }
@@ -39,8 +39,8 @@ namespace SveaFinansTest.ViewModels
 
 
         //there are many ways of providing enum values to combobox etc.
-        //ObjectDataProvider, MarkupExtension, Behavior, View models 
-        //there are situations where you might need to add language, configuration, filter etc
+        //ObjectDataProvider, MarkupExtension, Behavior, View model
+        //there are situations where we might need to add language, configuration, filter etc
         //thus providing values via vm will give us more flexibility 
 
         public ObservableCollection<KeyValuePair<int, string>> Departments
